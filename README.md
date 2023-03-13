@@ -12,12 +12,12 @@ Source folder is taken from https://github.com/AdiY10/AppLearner/
 ### Notebooks:
 Notebooks folders contains app_training.py and app_testing.py
 
-app_training.py trains models from data (CPU and Memory).
-Usage: python3 app_training.py container_cpu/container_mem $app_name $lookback $forecast $output_file
+app_training.py trains models from data (CPU and Memory).  
+Usage: python3 app_training.py container_cpu/container_mem $app_name $lookback $forecast $output_file  
 Example: python3 app_training.py container_cpu coredns 24 24 cpu_coredns_24_24
 
-app_testing.py predicts the unknown sequences showing graphs with MAE and RSME with diferent number of forecast steps
-Usage: python3 app_testing.py container_cpu/container_mem $app_name $output_file $interval //interval can be any number. Use different intervals for different ouputs from different sample measurements.
+app_testing.py predicts the unknown sequences showing graphs with MAE and RSME with diferent number of forecast steps  
+Usage: python3 app_testing.py container_cpu/container_mem $app_name $output_file $interval //interval can be any number. Use different intervals for different ouputs from different sample measurements.  
 Example: python3 app_testing.py container_cpu coredns cpu_coredns_24_24 100
 
 ### TrainedModels
