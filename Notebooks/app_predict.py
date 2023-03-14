@@ -21,14 +21,14 @@ dataset_ = ds.get_data_set(
     path_to_data="../data/"
 )
 
-def predict_values(sys3, sys4, dataset_test):
+def predict_values(sys3, horizon, dataset_test):
 
     # input and output sequences
     n_lookback = int(sys3)  # length of input sequences (lookback period)
-    n_forecast = int(sys4)  # length of output sequences (forecast period)
+    n_forecast = int(horizon)  # length of output sequences (forecast period)
 
     # trained model file to load
-    file = sys.argv[4]
+    file = sys.argv[4]+"_"+horizon;
 
     # load json and create model
     json_file = open(file+".json", 'r')
