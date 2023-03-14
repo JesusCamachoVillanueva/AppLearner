@@ -10,15 +10,15 @@ Please, visit https://github.com/AdiY10/AppLearner/ for all the details.
 Source folder is taken from https://github.com/AdiY10/AppLearner/
 
 ### Notebooks:
-Notebooks folders contains app_training.py and app_testing.py
+Notebooks folders contains app_training.py and app_predict.py
 
 app_training.py trains models from data (CPU and Memory).  
 <b>Usage:</b> python3 app_training.py container_cpu/container_mem $app_name $lookback $forecast $output_file  
-<b>Example</b>: python3 app_training.py container_cpu coredns 24 24 cpu_coredns_24_24
+<b>Example</b>: python3 app_predict.py container_cpu dns 12 48 cpu_coredns_12_48
 
-app_testing.py predicts the unknown sequences showing graphs with MAE and RSME with diferent number of forecast steps  
-<b>Usage</b>: python3 app_testing.py container_cpu/container_mem $app_name $output_file $interval //interval can be any number. Use different intervals for different ouputs from different sample measurements.  
-<b>Example</b>: python3 app_testing.py container_cpu coredns cpu_coredns_24_24 100
+app_predict.py predicts the unknown sequences showing graphs with MAE and RSME with diferent number of forecast steps  
+<b>Usage</b>: python3 app_predict.py container_cpu/container_mem $app_name $lookback $trained_file $interval //interval can be any number. Use different intervals for predicting different ouputs from different sample measurements.  
+<b>Example</b>: python3 app_predict.py container_mem coredns 24 cpu_coredns_24_96 100
 
 ### TrainedModels
 Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536
