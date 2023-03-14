@@ -31,7 +31,7 @@ def predict_values(sys3, sys4, dataset_test):
     file = sys.argv[4]
 
     # load json and create model
-    json_file = open(file, 'r')
+    json_file = open(file+".json", 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     model = model_from_json(loaded_model_json)
