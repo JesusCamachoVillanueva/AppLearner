@@ -100,6 +100,11 @@ number = int(sys.argv[5]) % int(len(dataset_) * 0.33)
 # forecast interval selected (testing part)
 dataset_test = dataset_[int(len(dataset_) * 0.67) + number]
 
+# dataset_test must be greater than lookback
+if(len(dataset_test) <= int(sys.argv[3])):
+    print("Interval not long enough")
+    quit()
+
 # samples
 original_as_series = dataset_test['sample'].copy()
 x_axis = [time for time in dataset_test["time"]]
@@ -112,6 +117,7 @@ colors = ["red", "limegreen", "cyan", "maroon", "orange", "lightgray", "yellow",
 rmse = []
 mae = []
 
+# iterate over the different forecast (horizon) values
 for i in range(8):
     # predict horizons
     Y3_ , rmse_, mae_, test_len, forecast_len, len_data, interval = predict_values(sys.argv[3], horizons[i], dataset_test)
