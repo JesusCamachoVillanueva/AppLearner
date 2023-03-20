@@ -1,6 +1,6 @@
 # imports
 import matplotlib.pyplot as plt
-import sys, getopt
+import sys, getopt, os
 import src.framework__data_set as ds
 import numpy as np
 import pandas as pd
@@ -94,8 +94,17 @@ def predict_values(sys3, horizon, dataset_test):
     return Y3_ , rmse, mae, test_len, forecast_len, len_data, number
 
 
-rmse = []
-mae = []
+# create file to write errors
+error_file = sys.argv[4]+".error"
+try:
+    os.remove(error_file)
+except OSError:
+    pass
+file = open(error_file, 'w')
+file.write("forecast interval #samples RMSE MAE\n")
+file.write("-----------------------------------\n")
+file.close()
+
 # obtain RMSE and MAE for all intervals
 for n in range(int(len(dataset_) * 0.33)):
 
@@ -135,31 +144,23 @@ for n in range(int(len(dataset_) * 0.33)):
         predicted_as_series = df_future['Forecast']
         predicted_as_series.index = x_axis[test_len:test_len+forecast_len]
         predicted_as_series.plot(ax=ax, color=colors[i], label="Horizon: " + horizons[i], linewidth=1)
-        rmse.append(rmse_)
-        mae.append(mae_)
 
-n=0
-# print all interval errors
-file2 = sys.argv[4];
-with open(file2+".error", 'w') as sys.stdout:
-    print("forecast interval #samples RMSE MAE")
-    print("-----------------------------------")
-    for n in range(int(len(dataset_) * 0.33)):
-
-        number = n % int(len(dataset_) * 0.33)
-        dataset_test = dataset_[int(len(dataset_) * 0.67) + number]
-
-        # no more data to show
-        if(n*8 >= len(rmse)):
-            quit()
-
-        print("12 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[int((n*8)+0)]))+" "+str("{:.5f}".format(mae[int((n*8)+0)])))
-        print("24 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+1]))+" "+str("{:.5f}".format(mae[(n*8)+1])))
-        print("48 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+2]))+" "+str("{:.5f}".format(mae[(n*8)+2])))
-        print("96 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+3]))+" "+str("{:.5f}".format(mae[(n*8)+3])))
-        print("192 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+4]))+" "+str("{:.5f}".format(mae[(n*8)+4])))
-        print("384 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+5]))+" "+str("{:.5f}".format(mae[(n*8)+5])))
-        print("768 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+6]))+" "+str("{:.5f}".format(mae[(n*8)+6])))
-        print("1636 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[(n*8)+7])+" "+str("{:.5f}".format(mae[(n*8)+7]))))
-        n=n+1
-
+        # append errors
+        file = open(error_file, 'a')
+        if i == 0:
+            file.write("12 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 1:
+            file.write("24 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 2:
+            file.write("48 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 3:
+            file.write("96 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 4:
+            file.write("192 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 5:
+            file.write("384 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        elif i == 6:
+            file.write("768 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+        else:
+            file.write("1636 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_)+" "+str("{:.5f}".format(mae_)))+"\n")
+        file.close()
