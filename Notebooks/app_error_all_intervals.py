@@ -11,6 +11,8 @@ from datetime import datetime, timedelta
 from tensorflow.keras.layers import Dense, LSTM
 from tensorflow.keras.models import Sequential, model_from_json
 from sklearn.preprocessing import MinMaxScaler
+from memory_profiler import profile
+
 pd.options.mode.chained_assignment = None
 tf.random.set_seed(0)
 
@@ -21,23 +23,29 @@ dataset_ = ds.get_data_set(
     path_to_data="../data/"
 )
 
-def predict_values(sys3, horizon, dataset_test):
+def get_model(trained_model):
 
-    # input and output sequences
-    n_lookback = int(sys3)  # length of input sequences (lookback period)
-    n_forecast = int(horizon)  # length of output sequences (forecast period)
-
-    # trained model file to load
-    file = sys.argv[4]+"_"+horizon;
-
+    # trained models files to load
+    file = sys.argv[4]+"_"+trained_model;
     # load json and create model
     json_file = open(file+".json", 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     model = model_from_json(loaded_model_json)
+
     # load weights into new model
     model.load_weights(file+".h5")
     print("Loaded model " + file + " from disk")
+
+    return model
+
+# @profile
+
+def predict_values(sys3, horizon, dataset_test, model):
+
+    # input and output sequences
+    n_lookback = int(sys3)  # length of input sequences (lookback period)
+    n_forecast = int(horizon)  # length of output sequences (forecast period)
 
     # scale data
     scaler_test = MinMaxScaler()
@@ -53,7 +61,8 @@ def predict_values(sys3, horizon, dataset_test):
     # predict forecasts
     X_ = y[test_len-n_lookback:test_len]
     X_ = X_.reshape(1, n_lookback, 1)
-    Y_ = model.predict(X_).reshape(-1, 1)
+    Y_ = model(X_)
+    Y_ = Y_.numpy().reshape(-1, 1)
     Y3_ = []
     Y3_ = np.array(Y3_)
     Y3_ = Y_
@@ -65,7 +74,8 @@ def predict_values(sys3, horizon, dataset_test):
     for i in range(int((len(dataset_test)-len(data_test))/n_forecast) - 0):
         X2_ = y[test_len-n_lookback+(n_forecast*(i+1)):test_len+(n_forecast*(i+1))]
         X2_ = X2_.reshape(1, n_lookback, 1)
-        Y2_ = model.predict(X2_).reshape(-1, 1)
+        Y2_ = model(X2_)
+        Y2_ = Y2_.numpy().reshape(-1, 1)
         # cut last append
         if(i == int((len(dataset_test)-len(data_test))/n_forecast) - 1):
             until = len_data - len(Y3_) - n_lookback 
@@ -91,7 +101,7 @@ def predict_values(sys3, horizon, dataset_test):
     Y3_ = scaler_test.inverse_transform(Y3_)
     dataset_test['sample'] = scaler_test.inverse_transform(dataset_test[['sample']])
 
-    return Y3_ , rmse, mae, test_len, forecast_len, len_data, number
+    return number, len(dataset_test), rmse, mae
 
 
 # create file to write errors
@@ -104,6 +114,21 @@ file = open(error_file, 'w')
 file.write("forecast interval #samples RMSE MAE\n")
 file.write("-----------------------------------\n")
 file.close()
+
+# lists
+horizons = ["12", "24", "48", "96", "192", "384", "768", "1536"]
+colors = ["red", "limegreen", "cyan", "maroon", "orange", "lightgray", "yellow", "black"]
+
+# get models
+
+model_0 = get_model(horizons[0])
+model_1 = get_model(horizons[1])
+model_2 = get_model(horizons[2])
+model_3 = get_model(horizons[3])
+model_4 = get_model(horizons[4])
+model_5 = get_model(horizons[5])
+model_6 = get_model(horizons[6])
+model_7 = get_model(horizons[7])
 
 # obtain RMSE and MAE for all intervals
 for n in range(int(len(dataset_) * 0.33)):
@@ -123,44 +148,36 @@ for n in range(int(len(dataset_) * 0.33)):
     if(len(dataset_test) <= int(sys.argv[3])):
         print("Interval not long enough")
         continue
-
-    # samples
-    original_as_series = dataset_test['sample'].copy()
-    x_axis = [time for time in dataset_test["time"]]
-    original_as_series.index = x_axis
-    ax = original_as_series.plot(color="blue", label="Sample", linewidth=1)
-
-    # lists
-    horizons = ["12", "24", "48", "96", "192", "384", "768", "1536"]
-    colors = ["red", "limegreen", "cyan", "maroon", "orange", "lightgray", "yellow", "black"]
     
     # iterate over the different forecast (horizon) values
     for i in range(8):
-        # predict horizons
-        Y3_ , rmse_, mae_, test_len, forecast_len, len_data, interval = predict_values(sys.argv[3], horizons[i], dataset_test)
-        # plot results
-        df_future = pd.DataFrame(columns=['Forecast'])
-        df_future['Forecast'] = Y3_.flatten()
-        predicted_as_series = df_future['Forecast']
-        predicted_as_series.index = x_axis[test_len:test_len+forecast_len]
-        predicted_as_series.plot(ax=ax, color=colors[i], label="Horizon: " + horizons[i], linewidth=1)
 
-        # append errors
+        # predict horizons & append errors
         file = open(error_file, 'a')
+
         if i == 0:
-            file.write("12 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_0)
+            file.write("12 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 1:
-            file.write("24 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_1)
+            file.write("24 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 2:
-            file.write("48 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_2)
+            file.write("48 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 3:
-            file.write("96 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_3)
+            file.write("96 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 4:
-            file.write("192 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_4)
+            file.write("192 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 5:
-            file.write("384 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_5)
+            file.write("384 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         elif i == 6:
-            file.write("768 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_))+" "+str("{:.5f}".format(mae_))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_6)
+            file.write("768 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         else:
-            file.write("1636 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse_)+" "+str("{:.5f}".format(mae_)))+"\n")
+            number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_7)
+            file.write("1636 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse)+" "+str("{:.5f}".format(mae)))+"\n")
         file.close()
+
