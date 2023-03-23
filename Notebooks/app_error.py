@@ -58,7 +58,7 @@ def predict_values(sys3, horizon, dataset_test):
     Y3_ = np.array(Y3_)
     Y3_ = Y_
     # cut first prediction when longer than test set
-    if(len(Y3_) > len_data):
+    if(len(Y3_) > len_data - n_lookback):
         Y3_ = Y_[0:len_data - n_lookback]
 
     # append forecasts
@@ -105,12 +105,6 @@ if(len(dataset_test) <= int(sys.argv[3])):
     print("Interval not long enough")
     quit()
 
-# samples
-original_as_series = dataset_test['sample'].copy()
-x_axis = [time for time in dataset_test["time"]]
-original_as_series.index = x_axis
-ax = original_as_series.plot(color="blue", label="Sample", linewidth=1)
-
 # lists
 horizons = ["12", "24", "48", "96", "192", "384", "768", "1536"]
 colors = ["red", "limegreen", "cyan", "maroon", "orange", "lightgray", "yellow", "black"]
@@ -121,12 +115,7 @@ mae = []
 for i in range(8):
     # predict horizons
     Y3_ , rmse_, mae_, test_len, forecast_len, len_data, interval = predict_values(sys.argv[3], horizons[i], dataset_test)
-    # plot results
-    df_future = pd.DataFrame(columns=['Forecast'])
-    df_future['Forecast'] = Y3_.flatten()
-    predicted_as_series = df_future['Forecast']
-    predicted_as_series.index = x_axis[test_len:test_len+forecast_len]
-    predicted_as_series.plot(ax=ax, color=colors[i], label="Horizon: " + horizons[i], linewidth=1)
+    # append results
     rmse.append(rmse_)
     mae.append(mae_)
 

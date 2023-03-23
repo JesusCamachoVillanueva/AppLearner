@@ -67,7 +67,7 @@ def predict_values(sys3, horizon, dataset_test, model):
     Y3_ = np.array(Y3_)
     Y3_ = Y_
     # cut first prediction when longer than test set
-    if(len(Y3_) > len_data):
+    if(len(Y3_) > len_data - n_lookback):
         Y3_ = Y_[0:len_data - n_lookback]
 
     # append forecasts
@@ -139,10 +139,7 @@ for n in range(int(len(dataset_) * 0.33)):
     # forecast interval selected (testing part)
     dataset_test = dataset_[int(len(dataset_) * 0.67) + number]
 
-    print("==============================")
-    print(str(number))
-    print(str(len(dataset_test)))
-    print("------------------------------")
+    print("Interval: "+str(number+1)+"/"+str(int(len(dataset_) * 0.33))+", #samples: "+(str(len(dataset_test))))
 
     # dataset_test must be euqls or greater than lookback
     if(len(dataset_test) <= int(sys.argv[3])):
