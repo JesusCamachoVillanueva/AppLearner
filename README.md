@@ -34,4 +34,4 @@ app_training.py trains models from data (CPU and Memory).
 <b>Example</b>: python3 app_error_all_intervals.py container_mem 24 mem_coredns_24
 
 ### TrainedModels
-Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536
+Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536 and error files (some trained models for lookback 24 and error files for the mentioned lookback are still in progress and will be uploaded soon)
