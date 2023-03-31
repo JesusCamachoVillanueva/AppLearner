@@ -35,7 +35,7 @@ app_training.py trains models from data (CPU and Memory).
 
 //quantiles.sh obtain quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0-0.5,0.5-1,1-1.5,1.5-2 and >2.  
 <b>Usage</b>: ./quantiles.sh $error_file  
-<b>Example</b>: ./quantiles.sh coredns-monitor.error
+<b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
 
 ### TrainedModels
 Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536 and error files (some trained models for lookback 24 and error files for the mentioned lookback are still in progress and will be uploaded soon)
