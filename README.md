@@ -10,7 +10,7 @@ Please, visit https://github.com/AdiY10/AppLearner/ for all the details.
 Source folder is taken from https://github.com/AdiY10/AppLearner/
 
 ### Notebooks:
-Notebooks folders contains app_training.py, app_predict.py, app_error.py and app_error_all_intervals.py 
+Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_error_all_intervals.py and quantiles.sh.
 
 app_training.py trains models from data (CPU and Memory).
 
@@ -32,6 +32,10 @@ app_training.py trains models from data (CPU and Memory).
 //app_error_all_intervals.py prints a .error file with RMSE and MAE results for a trained $lookback with forecasts (12, 24, 48, 96, 192, 384, 768 and 1536) with all test intervals for a given app  
 <b>Usage</b>: python3 app_error_all_intervals.py container_cpu/container_mem $lookback $trained_file  
 <b>Example</b>: python3 app_error_all_intervals.py container_mem 24 mem_coredns_24
+
+//quantiles.sh obtain quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0-0.5,0.5-1,1-1.5,1.5-2 and >2.
+<b>Usage</b>: ./quantiles.sh $error_file  
+<b>Example</b>: ./quantiles.sh coredns-monitor.error
 
 ### TrainedModels
 Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536 and error files (some trained models for lookback 24 and error files for the mentioned lookback are still in progress and will be uploaded soon)
