@@ -38,4 +38,4 @@ app_training.py trains models from data (CPU and Memory).
 <b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
 
 ### TrainedModels
-Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536 and error files (some trained models for lookback 24 and error files for the mentioned lookback are still in progress and will be uploaded soon)
+Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error and quintiles files (some trained models for lookback 24 and error and quintiles files for the mentioned lookback are still in progress and will be uploaded soon)
