@@ -33,7 +33,7 @@ app_training.py trains models from data (CPU and Memory).
 <b>Usage</b>: python3 app_error_all_intervals.py container_cpu/container_mem $lookback $trained_file  
 <b>Example</b>: python3 app_error_all_intervals.py container_mem 24 mem_coredns_24
 
-//quantiles.sh obtain quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0-0.5,0.5-1,1-1.5,1.5-2 and >2.
+//quantiles.sh obtain quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0-0.5,0.5-1,1-1.5,1.5-2 and >2.  
 <b>Usage</b>: ./quantiles.sh $error_file  
 <b>Example</b>: ./quantiles.sh coredns-monitor.error
 
