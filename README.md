@@ -10,7 +10,7 @@ Please, visit https://github.com/AdiY10/AppLearner/ for all the details.
 Source folder is taken from https://github.com/AdiY10/AppLearner/
 
 ### Notebooks:
-Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_error_all_intervals.py and quantiles.sh.
+Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_error_all_intervals.py, quantiles.sh and quantiles_rmse_mae.sh.
 
 app_training.py trains models from data (CPU and Memory).
 
@@ -33,9 +33,13 @@ app_training.py trains models from data (CPU and Memory).
 <b>Usage</b>: python3 app_error_all_intervals.py container_cpu/container_mem $lookback $trained_file  
 <b>Example</b>: python3 app_error_all_intervals.py container_mem 24 mem_coredns_24
 
-//quantiles.sh obtain quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0-0.5,0.5-1,1-1.5,1.5-2 and >2.  
+//quantiles.sh obtains RMSE quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0.0-0.5, 0.5-1.0, 1.0-1.5, 1.5-2.0 and >2.0.  
+<b>Usage</b>: ./quantiles.sh $error_file  
+<b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
+
+//quantiles_rmse_mae.sh obtains RMSE and MAE deciles from .error files and leaves a .deciles files in the same path. deciles are 0.0-0.5, 0.5-1.0, 1.0-1.5, 1.5-2.0, 2.0-2.5, 2.5-3.0, 3.0-3.5, 3.5-4.0, 4.0-4.5, 4.5-5.0 and >5.0.  
 <b>Usage</b>: ./quantiles.sh $error_file  
 <b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
 
 ### TrainedModels
-Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error and quintiles files (some trained models for lookback 24 and error and quintiles files for the mentioned lookback are still in progress and will be uploaded soon)
+Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error, quintiles and deciles files (some trained models for lookback 24, error, quintiles and deciles files for the mentioned lookback are still in progress and will be uploaded soon)
