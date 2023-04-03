@@ -53,11 +53,11 @@ range_768_3=$(cat $1 | grep "^768" | awk '{ if ($4 >= 0.10 && $4 < 0.15) print $
 range_768_4=$(cat $1 | grep "^768" | awk '{ if ($4 >= 0.15 && $4 < 0.20) print $4 }' | wc -l)
 range_768_5=$(cat $1 | grep "^768" | awk '{ if ($4 >= 0.20) print $4 }' | wc -l)
 
-range_1636_1=$(cat $1 | grep "^1636" | awk '{ if ($4 >= 0 && $4 < 0.05) print $4 }' | wc -l)
-range_1636_2=$(cat $1 | grep "^1636" | awk '{ if ($4 >= 0.05 && $4 < 0.10) print $4 }' | wc -l)
-range_1636_3=$(cat $1 | grep "^1636" | awk '{ if ($4 >= 0.10 && $4 < 0.15) print $4 }' | wc -l)
-range_1636_4=$(cat $1 | grep "^1636" | awk '{ if ($4 >= 0.15 && $4 < 0.20) print $4 }' | wc -l)
-range_1636_5=$(cat $1 | grep "^1636" | awk '{ if ($4 >= 0.20) print $4 }' | wc -l)
+range_1536_1=$(cat $1 | grep "^1536" | awk '{ if ($4 >= 0 && $4 < 0.05) print $4 }' | wc -l)
+range_1536_2=$(cat $1 | grep "^1536" | awk '{ if ($4 >= 0.05 && $4 < 0.10) print $4 }' | wc -l)
+range_1536_3=$(cat $1 | grep "^1536" | awk '{ if ($4 >= 0.10 && $4 < 0.15) print $4 }' | wc -l)
+range_1536_4=$(cat $1 | grep "^1536" | awk '{ if ($4 >= 0.15 && $4 < 0.20) print $4 }' | wc -l)
+range_1536_5=$(cat $1 | grep "^1536" | awk '{ if ($4 >= 0.20) print $4 }' | wc -l)
 
 #print quintiles
 echo -e lookback forecash quantile total matches > $output_file
@@ -104,9 +104,9 @@ echo -e $lookback 768  0.10-0.15 $total_by_forecast $range_768_3 >> $output_file
 echo -e $lookback 768  0.15-0.20 $total_by_forecast $range_768_4 >> $output_file
 echo -e $lookback 768  0.20-1.00 $total_by_forecast $range_768_5 >> $output_file
 echo "" >> $output_file
-echo -e $lookback 1636 0.00-0.05 $total_by_forecast $range_1636_1 >> $output_file
-echo -e $lookback 1636 0.05-0.10 $total_by_forecast $range_1636_2 >> $output_file
-echo -e $lookback 1636 0.10-0.15 $total_by_forecast $range_1636_3 >> $output_file
-echo -e $lookback 1636 0.15-0.20 $total_by_forecast $range_1636_4 >> $output_file
-echo -e $lookback 1636 0.20-1.00 $total_by_forecast $range_1636_5 >> $output_file
+echo -e $lookback 1536 0.00-0.05 $total_by_forecast $range_1536_1 >> $output_file
+echo -e $lookback 1536 0.05-0.10 $total_by_forecast $range_1536_2 >> $output_file
+echo -e $lookback 1536 0.10-0.15 $total_by_forecast $range_1536_3 >> $output_file
+echo -e $lookback 1536 0.15-0.20 $total_by_forecast $range_1536_4 >> $output_file
+echo -e $lookback 1536 0.20-1.00 $total_by_forecast $range_1536_5 >> $output_file
 echo -e File $output_file has been created!
