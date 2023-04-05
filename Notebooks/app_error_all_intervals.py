@@ -175,6 +175,6 @@ for n in range(int(len(dataset_) * 0.33)):
             file.write("768 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse))+" "+str("{:.5f}".format(mae))+"\n")
         else:
             number, len_test, rmse, mae = predict_values(sys.argv[3], horizons[i], dataset_test, model_7)
-            file.write("1636 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse)+" "+str("{:.5f}".format(mae)))+"\n")
+            file.write("1536 "+str(number)+" "+str(len_test)+" "+str("{:.5f}".format(rmse)+" "+str("{:.5f}".format(mae)))+"\n")
         file.close()
 
