@@ -131,5 +131,5 @@ with open(file2+".error", 'w') as sys.stdout:
     print("192 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[4]))+" "+str("{:.5f}".format(mae[4])))
     print("384 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[5]))+" "+str("{:.5f}".format(mae[5])))
     print("768 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[6]))+" "+str("{:.5f}".format(mae[6])))
-    print("1636 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[7])+" "+str("{:.5f}".format(mae[7]))))
+    print("1536 "+str(number)+" "+str(len(dataset_test))+" "+str("{:.5f}".format(rmse[7])+" "+str("{:.5f}".format(mae[7]))))
 
