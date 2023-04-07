@@ -1,3 +1,5 @@
+# Author "Jesus Camacho Villanueva <jcamacho@redhat.com>"
+
 # imports
 import matplotlib.pyplot as plt
 import sys, getopt, os

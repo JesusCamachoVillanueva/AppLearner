@@ -1,3 +1,5 @@
+# Author "Jesus Camacho Villanueva <jcamacho@redhat.com>"
+
 #!/bin/bash
 
 #get file information
