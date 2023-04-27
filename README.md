@@ -4,13 +4,13 @@ The goal of the project is to build as accurately as possible a prediction model
 Time-series data on CPU/Memory usage provided by Prometheus, will be used to learn and forecast future resources usage.
 
 ## Background:
-Please, visit https://github.com/AdiY10/AppLearner/ for all the details.
+Please, you can visit https://github.com/AdiY10/AppLearner/ for more details about the project.
 
 ### src:
-Source folder is taken from https://github.com/AdiY10/AppLearner/
+Source files to extract recorded data
 
 ### Notebooks:
-Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_error_all_intervals.py, quantiles.sh and quantiles_rmse_mae.sh.
+Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_error_all_intervals.py, app_quantiles.py, quantiles.sh and quantiles_rmse_mae.sh.
 
 app_training.py trains models from data (CPU and Memory).
 
@@ -32,6 +32,10 @@ app_training.py trains models from data (CPU and Memory).
 //app_error_all_intervals.py prints a .error file with RMSE and MAE results for a trained $lookback with forecasts (12, 24, 48, 96, 192, 384, 768 and 1536) with all test intervals for a given app  
 <b>Usage</b>: python3 app_error_all_intervals.py container_cpu/container_mem $lookback $trained_file  
 <b>Example</b>: python3 app_error_all_intervals.py container_mem 24 mem_coredns_24
+
+//app_quantiles.py prints a quantile figure after reading a .deciles file  
+<b>Usage</b>: python3 app_quantiles.py $deciles_file  
+<b>Example</b>: python3 app_quantiles.py cpu_kube-multus-additional-cni-plugins_24.deciles 
 
 //quantiles.sh obtains RMSE quintiles from .error files and leaves a .quintiles files in the same path. quintiles are 0.0-0.5, 0.5-1.0, 1.0-1.5, 1.5-2.0 and >2.0.  
 <b>Usage</b>: ./quantiles.sh $error_file  
