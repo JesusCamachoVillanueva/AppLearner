@@ -4,7 +4,7 @@ The goal of the project is to build as accurately as possible a prediction model
 Time-series data on CPU/Memory usage provided by Prometheus, will be used to learn and forecast future resources usage.
 
 ## Background:
-Please, you can visit https://github.com/AdiY10/AppLearner/ for more details about the project.
+You can visit https://github.com/AdiY10/AppLearner/ for more details about the project.
 
 ### src:
 Source files to extract recorded data
@@ -41,9 +41,9 @@ app_training.py trains models from data (CPU and Memory).
 <b>Usage</b>: ./quantiles.sh $error_file  
 <b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
 
-//quantiles_rmse_mae.sh obtains RMSE and MAE deciles from .error files and leaves a .deciles files in the same path. deciles are 0.0-0.5, 0.5-1.0, 1.0-1.5, 1.5-2.0, 2.0-2.5, 2.5-3.0, 3.0-3.5, 3.5-4.0, 4.0-4.5, 4.5-5.0 and >5.0.  
+*quantiles_rmse_mae.sh* obtains RMSE and MAE deciles from .error files and leaves a .deciles files in the same path. deciles are 0.0-0.5, 0.5-1.0, 1.0-1.5, 1.5-2.0, 2.0-2.5, 2.5-3.0, 3.0-3.5, 3.5-4.0, 4.0-4.5, 4.5-5.0 and >5.0.  
 <b>Usage</b>: ./quantiles.sh $error_file  
 <b>Example</b>: ./quantiles.sh mem_coredns-monitor.error
 
 ### TrainedModels
-Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error, quintiles and deciles files (some trained models for lookback 24, error, quintiles and deciles files for the mentioned lookback are still in progress and will be uploaded soon)
+Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error, quintiles and deciles files
