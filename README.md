@@ -15,13 +15,13 @@ Notebooks folders contains app_training.py, app_predict.py, app_error.py, app_er
 app_training.py trains models from data (CPU and Memory).
 
 *app_training.py* trains apps with a given lookback and forecast and store the models of the trained apps (json & h5)  
-//Trained file name should be: metric_name_lookback_forecast  
+Trained file name should be: metric_name_lookback_forecast  
 <b>Usage:</b> python3 app_training.py container_cpu/container_mem $app_name $lookback $forecast $output_file  
 <b>Example</b>: python3 app_training.py container_cpu dns 12 48 cpu_coredns_12_48
 
 *app_predict.py* predicts unknown sequences showing graphs with MAE and RSME with diferent number of forecast steps  
-//Interval can be any number. Use different intervals for predicting different ouputs from different sample measurements  
-//Trained file is loaded by the next name: metric_name_lookback  
+Interval can be any number. Use different intervals for predicting different ouputs from different sample measurements  
+Trained file is loaded by the next name: metric_name_lookback  
 <b>Usage</b>: python3 app_predict.py container_cpu/container_mem $app_name $lookback $trained_file $interval  
 <b>Example</b>: python3 app_predict.py container_mem coredns 24 cpu_coredns_24 100
 
