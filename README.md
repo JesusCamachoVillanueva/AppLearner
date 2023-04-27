@@ -47,3 +47,6 @@ Trained file is loaded by the next name: metric_name_lookback
 
 ### TrainedModels
 Contains several already trained models with lookback 12 and 24 and forecast 12, 24, 48, 96, 192, 384, 768 and 1536, error, quintiles and deciles files
+
+### Examples
+Contains example figures with predictions and quantile figures from several Apps
