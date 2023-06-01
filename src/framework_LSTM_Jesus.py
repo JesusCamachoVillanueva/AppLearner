@@ -199,14 +199,14 @@ class LSTM_Jesus:
         # title
         plt.suptitle("Metric: " + metric + ", App: " + app + ", Lookback: " + n_lookback + ", Horizon: 12-1536\n12-12 RMSE: " + str("{:.5f}".format(rmse[0])) + " - MAE: " + str("{:.5f}".format(mae[0])) + " | 12-192 RMSE: " + str("{:.5f}".format(rmse[4])) + " - MAE: " + str("{:.5f}".format(mae[4])) + "\n12-24 RMSE: " + str("{:.5f}".format(rmse[1])) + " - MAE: " + str("{:.5f}".format(mae[1])) + " | 12-384 RMSE: " + str("{:.5f}".format(rmse[5])) + " - MAE: " + str("{:.5f}".format(mae[5])) + "\n12-48 RMSE: " + str("{:.5f}".format(rmse[2])) + " - MAE: " + str("{:.5f}".format(mae[2])) + " | 12-768 RMSE: " + str("{:.5f}".format(rmse[6])) + " - MAE: " + str("{:.5f}".format(mae[6])) + "\n12-96 RMSE: " + str("{:.5f}".format(rmse[3])) + " - MAE: " + str("{:.5f}".format(mae[3])) + " | 12-1536 RMSE: " + str("{:.5f}".format(rmse[7])) + " - MAE: " + str("{:.5f}".format(mae[7])) + "\n Interval: " + str(interval) + ". Samples in this interval: " + str(len_data))
 
-    # plot features
-    plt.legend(ncol=2, loc="upper left")
-    plt.xlabel("Minutes")
-    plt.ylabel("Values")
-    #plt.tight_layout()
-    plt.subplots_adjust(top=0.85)
-    plt.subplots_adjust(bottom=0.1)
-    plt.show()
+        # plot features
+        plt.legend(ncol=2, loc="upper left")
+        plt.xlabel("Minutes")
+        plt.ylabel("Values")
+        #plt.tight_layout()
+        plt.subplots_adjust(top=0.85)
+        plt.subplots_adjust(bottom=0.1)
+        plt.show()
 
 
     # print prediction errors for a given interval
