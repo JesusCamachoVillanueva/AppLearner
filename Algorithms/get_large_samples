@@ -1,0 +1,3 @@
+for i in ../TrainedModels/lookback_12/app_cpu/*/*.error; do echo $i; cat $i | awk '$3>1400 && $3<1536  {print; exit}'; done
+for i in ../TrainedModels/lookback_12/app_mem/*/*.error; do echo $i; cat $i | awk '$3>1400 && $3<1536  {print; exit}'; done
+
